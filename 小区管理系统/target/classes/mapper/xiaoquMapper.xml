@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.mju.xiaoqu.dao.xiaoquDao">
+
+   <!-- 映射条目，这个条目的类似是增加操作 -->
+   <insert id="addxiaoqu" parameterType="xiaoqu">
+       insert into xiaoqu 
+       values(#{xiaoqunum},#{xiaoquname},#{xiaoquadd},#{cartotal},#{xiaoqupic})
+   </insert>
+  <select id="loadxiaoqu" resultType="xiaoqu">
+  select * from xiaoqu 
+  </select>
+ 
+  <delete id="delxiaoqu" parameterType="int">
+  delete from xiaoqu where xiaoqunum=#{xiaoqunum}
+  </delete>
+  <select id="getxiaoquByNo" parameterType="int" resultType="xiaoqu">
+  select * from xiaoqu where xiaoqunum=#{xiaoqunum}
+  </select>
+  <update id="updatexiaoqu" parameterType="xiaoqu">
+  update xiaoqu set xiaoquname=#{xiaoquname},xiaoquadd=#{xiaoquadd},xiaoqupic=#{xiaoqupic},cartotal=#{cartotal} where xiaoqunum=#{xiaoqunum}
+  </update>
+  <select id="getxiaoquPicByNo" parameterType="int" resultMap="picMap">
+      select xiaoqupic
+      from xiaoqu
+      where xiaoqunum=#{xiaoqunum}
+   </select>
+   
+   <!-- 
+           读取字段stu_pic中的数据，使用BlobTypeHandler做转换，成为byte[]后
+          以imgBytes为key保存一个MAP对象中返回
+    -->
+   <resultMap type="java.util.Map" id="picMap">
+      <id column="xiaoqupic" property="imgBytes" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+   </resultMap>
+   
+  <!--
+         属性和字段的隐射，目前走的是默认机制，驼峰和下划线的自动转换，也是最理想化的模式。
+        一个查询出来的记录集如何映射到对应的实体中，往往我们需要额外制定一个映射机制，叫做resultMap
+  --> 
+</mapper>

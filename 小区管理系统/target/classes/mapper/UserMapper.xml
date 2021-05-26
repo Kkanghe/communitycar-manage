@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    一个映射文件了说明如何对一个对象存储、读取、修改和删除，主要提供了若干条映射条目以及相关的SQL语句。
+   每个mapper的namespace类似于一个唯一标识符，是内部的映射条目的归属范围
+ 
+   一个映射条目主要就是为了某个dao方法服务的，所以其id一般也设置为和dao方法名保持一致。  
+   
+-->
+<mapper namespace="edu.mju.xiaoqu.dao.UserDao">
+
+   <select id="getUserByNo" parameterType="String" resultType="User">
+      select *
+      from user
+      where user_no=#{userNo}
+   </select>
+
+</mapper>

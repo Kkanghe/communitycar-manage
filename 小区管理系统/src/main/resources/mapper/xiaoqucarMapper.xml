@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.mju.xiaoqu.dao.xiaoqucarDao">
+  <select id="loadxiaoqucar" resultType="xiaoqucar">
+  select * from xiaoqucar 
+  </select>
+  <select id="loadxiaoqucars" parameterType="edu.mju.xiaoqu.service.carQueryHelp" resultType="xiaoqucar">
+ 	 select * from xiaoqucar where 1=1 
+      <if test="qryxiaoquname != null">
+          and xiaoquname like concat('%',#{qryxiaoquname},'%') 
+      </if>
+      <if test="qrycartype != null">
+          and cartype=#{qrycartype}
+      </if>
+      <if test="qrycarbrand != null">
+          and carbrand=#{qrycarbrand}
+      </if>
+      <if test="qrycartype != null">
+          and carstate=#{qrycarstate}
+      </if>
+  </select>
+    <select id="cntcarByCondition" parameterType="edu.mju.xiaoqu.service.carQueryHelp" resultType="long">
+ 	 select count(*) total_cnt from xiaoqucar where 1=1 
+      <if test="qryxiaoquname != null">
+          and xiaoquname like concat('%',#{qryxiaoquname},'%') 
+      </if>
+      <if test="qrycartype != null and qrycartype.length()>0">
+          and cartype=#{qrycartype}
+      </if>
+      <if test="qrycarbrand != null and qrycarbrand.length()>0">
+          and carbrand=#{qrycarbrand}
+      </if>
+      <if test="qrycartype != null and qrycarstate.length()>0">
+          and carstate=#{qrycarstate}
+      </if>
+  </select>
+  <select id="loadScopedcarByCondition"  resultType="xiaoqucar">
+ 	 select * from xiaoqucar where 1=1 
+      <if test="helper.qryxiaoquname != null">
+          and xiaoquname like concat('%',#{helper.qryxiaoquname},'%') 
+      </if>
+      <if test="helper.qrycartype != null and helper.qrycartype.length()>0">
+          and cartype=#{helper.qrycartype}
+      </if>
+      <if test="helper.qrycarbrand != null and helper.qrycarbrand.length()>0">
+          and carbrand=#{helper.qrycarbrand}
+      </if>
+      <if test="helper.qrycarstate != null and helper.qrycarstate.length()>0">
+          and carstate=#{helper.qrycarstate}
+      </if>
+      limit #{begin},#{size} 
+  </select>
+  <insert id="addxiaoqucar" parameterType="xiaoqucar">
+       insert into xiaoqucar 
+       values(#{xiaoquname},#{carnum},#{cartype},#{carbrand},#{carfeatures},#{carstate})
+  </insert>
+  <delete id="delxiaoqucar" parameterType="String">
+  delete from xiaoqucar where carnum=#{carnum}
+  </delete>
+  <update id="updatecar" parameterType="xiaoqucar">
+  update xiaoqucar set xiaoquname=#{xiaoquname},cartype=#{cartype},carbrand=#{carbrand},carfeatures=#{carfeatures},carstate=#{carstate} where carnum=#{carnum}
+  </update>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- 本文件指定了springmvc需要处理的内容的处理机制，如果不是springmvc处理的，则一律放行 -->
+    
+    <!-- springmvc的配置是用注解就可以了，十分方便 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    
+    <!-- 控制器部件扫描  （springmvc中servlet已经被controller这个概念封装掉了)
+         我们必须让springmvc知道其控制器所在的位置，以便加载控制器
+         包含基本包下头的子包
+    -->
+    <context:component-scan base-package="edu.mju.xiaoqu.controller"></context:component-scan>	
+    
+    <!-- 该视图解析器能够获取controller方法返回的视图信息，形成一个完整的页面路径 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="prefix" value="/WEB-INF/views/"></property>
+      <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!-- 遇到多段提交数据，一律使用这个解析器去处理，其会调用commons-fileupload去解决问题 -->
+    <bean id="multipartResolver"
+	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!--上传文件的最大大小，单位为字节 --> 
+		<property name="maxUploadSize" value="17367648787"></property>		 
+		<!-- 上传文件的编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+    </bean>   
+    
+    <!-- 静态资源 -->
+    <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> 
+    				
+</beans>

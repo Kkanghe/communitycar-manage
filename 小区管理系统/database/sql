@@ -1,0 +1,4 @@
+create table user(user_no char(20) primary key,user_pwd char(20) not null,user_name varchar(20) not null);
+create database xiaoqu;
+create table xiaoqu(xiaoqunum int(8) primary key,xiaoquname char(20) not null,xiaoquadd char(20) not null,cartotal int(20) not null,xiaoqupic mediumblob);
+create table xiaoqucar(xiaoquname char(20),carnum char(8) primary key,cartype char(10),carbrand char(10),carfeatures char(20),carstate char(5));
